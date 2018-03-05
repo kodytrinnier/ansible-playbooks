@@ -22,7 +22,7 @@
 
     - name: Install necessary packages
       yum:
-        name: "{{item}}"
+        name: "{{ item }}"
         state: latest
       with_items:
         - perl-Switch
@@ -62,7 +62,7 @@
       ec2_metric_alarm:
         state: present
         region: us-west-2
-        name: "CPU-Utilization-{{ansible_ec2_instance_id}}"
+        name: "CPU-Utilization-{{ ansible_ec2_instance_id }}"
         metric: "CPUUtilization"
         namespace: "AWS/EC2"
         statistic: Average
@@ -72,14 +72,14 @@
         period: 300
         unit: "Percent"
         description: "This will alarm when a cluster instances cpu is above 90% used"
-        dimensions: {'InstanceId':'{{ansible_ec2_instance_id}}'}
-        alarm_actions: ["{{topic}}"]
+        dimensions: {'InstanceId':'{{ ansible_ec2_instance_id }}'}
+        alarm_actions: ["{{ topic }}"]
 
     - name: create disk full alarm
       ec2_metric_alarm:
         state: present
         region: us-west-2
-        name: "Disk-Space-Used-{{ansible_ec2_instance_id}}"
+        name: "Disk-Space-Used-{{ ansible_ec2_instance_id }}"
         metric: "DiskSpaceUtilization"
         namespace: "System/Linux"
         statistic: Average
@@ -89,14 +89,14 @@
         period: 300
         unit: "Percent"
         description: "This will alarm when a cluster instances disk space is above 90% used"
-        dimensions: {'InstanceId':'{{ansible_ec2_instance_id}}','Filesystem':'/dev/xvda1','MountPath':'/'}
-        alarm_actions: ["{{topic}}"]
+        dimensions: {'InstanceId':'{{ ansible_ec2_instance_id }}','Filesystem':'/dev/xvda1','MountPath':'/'}
+        alarm_actions: ["{{ topic }}"]
 
     - name: create high memory alarm
       ec2_metric_alarm:
         state: present
         region: us-west-2
-        name: "Memory-Used-{{ansible_ec2_instance_id}}"
+        name: "Memory-Used-{{ ansible_ec2_instance_id }}"
         metric: "MemoryUtilization"
         namespace: "System/Linux"
         statistic: Average
@@ -106,6 +106,6 @@
         period: 300
         unit: "Percent"
         description: "This will alarm when a cluster instances memory is above 90% used"
-        dimensions: {'InstanceId':'{{ansible_ec2_instance_id}}'}
-        alarm_actions: ["{{topic}}"]
+        dimensions: {'InstanceId':'{{ ansible_ec2_instance_id }}'}
+        alarm_actions: ["{{ topic }}"]
 
